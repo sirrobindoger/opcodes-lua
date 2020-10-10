@@ -7,7 +7,7 @@ Example:
 net.AddOPVar{
 	name = "print",
 	payload = {"String", "Int"}, -- refer to the net.Write/Readx in the gmod wiki, eg: net.Read**String**
-	func = function(ply, str, int)
+	func = function(ply, str, int) -- ply will be nil if received on client
 		if CLIENT then
 			print("Recieved broadcast 1 from Server!")
 			print(str)
@@ -20,8 +20,8 @@ local opcode2 = net.AddOPVar{
 	name = "print2",
 	payload = {"UInt", "Vector"},
 	func = function(ply, uint, vec)
-		if CLIENT then
-			print("Recieved broadcast 2 from Server!")
+		if SERVER then
+			print("Recieved broadcast from " .. ply:GetName())
 			print(uint)
 			print(vec)
 		end
@@ -34,7 +34,7 @@ if SERVER then
 		"Hello world!", 
 		-19999
 	)
-	net.FireOPVar(opcode2, player.GetByID(1), 
+	net.FireOPVar(opcode2, -- if fired on client, player table is not included
 		3399944, 
 		Vector(23, 23, 44)
 	)
