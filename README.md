@@ -34,6 +34,7 @@ if SERVER then
 		"Hello world!", 
 		-19999
 	)
+else
 	net.FireOPVar(opcode2, -- if fired on client, player table is not included
 		3399944, 
 		Vector(23, 23, 44)
